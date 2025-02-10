@@ -8,6 +8,9 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
 import { FaLocationDot } from "react-icons/fa6";
+import { PropagateLoader } from "react-spinners";
+import { FaTimes } from "react-icons/fa";
+
 
 const UserProfile = () => {
   const { username } = useParams();
@@ -15,6 +18,7 @@ const UserProfile = () => {
   const [userData, setUserData] = useState<any>(null);
   const [repos, setRepos] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!username) {
@@ -72,8 +76,23 @@ const UserProfile = () => {
     fetchUserProfile();
   }, [username]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <PropagateLoader color="#0079FE" size={20} />
+      </div>
+    );
+  }
+
   if (error) return <p className="text-red-500 text-center">{error}</p>;
-  if (!userData) return <p className="text-center text-white">Loading...</p>;
 
   return (
     <div className="lg:w-[70%] md:w-[80%] w-[95%] mx-auto text-white">
@@ -174,7 +193,10 @@ const UserProfile = () => {
               </div>
             ))
           ) : (
-            <p className="text-gray-400">No repositories found.</p>
+            <div className="bg-[#ff00006b] w-full h-[50px] flex justify-between items-center rounded-[4px] px-[16px] mt-[100px]">
+              <p className="text-white font-mono">{error}</p>
+              <FaTimes className="text-white cursor-pointer" onClick={() => setError(null)} />
+            </div>
           )}
         </div>
       </div>

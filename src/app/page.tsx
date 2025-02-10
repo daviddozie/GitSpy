@@ -7,12 +7,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedinIn, FaGithub } from "react-icons/fa";
+import { PropagateLoader } from "react-spinners";
+import { FaTimes } from "react-icons/fa";
 
 const Home = () => {
 
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
 
   const fetchDefaultUserData = async () => {
     try {
@@ -49,6 +53,7 @@ const Home = () => {
     if (!username.trim()) return;
     setError(null);
     setUserData(null);
+    setLoading(true);
 
     try {
       const res = await fetch(`https://api.github.com/users/${username}`);
@@ -56,27 +61,32 @@ const Home = () => {
 
       if (data.message === 'Not Found') {
         setError("User not found!");
+        setLoading(false);
         return;
       }
 
-      setUserData({
-        avatar_url: data.avatar_url,
-        name: data.name,
-        login: data.login,
-        bio: data.bio,
-        followers: data.followers,
-        following: data.following,
-        public_repos: data.public_repos,
-        socialLinks: {
-          twitter: data.twitter_username ? `https://twitter.com/${data.twitter_username}` : null,
-          linkedin: "https://www.linkedin.com/in/your-linkedin-profile",
-          github: data.html_url,
-        },
-      });
+      setTimeout(() => {
+        setUserData({
+          avatar_url: data.avatar_url,
+          name: data.name,
+          login: data.login,
+          bio: data.bio,
+          followers: data.followers,
+          following: data.following,
+          public_repos: data.public_repos,
+          socialLinks: {
+            twitter: data.twitter_username ? `https://twitter.com/${data.twitter_username}` : null,
+            linkedin: "https://www.linkedin.com/in/your-linkedin-profile",
+            github: data.html_url,
+          },
+        });
+        setLoading(false);
+      }, 2000);
 
     } catch (error) {
       console.error("Error fetching user:", error);
       setError("An error occurred while fetching user data.");
+      setLoading(false);
     }
   };
 
@@ -96,11 +106,20 @@ const Home = () => {
         <Button style="px-[20px] py-[10px] font-mono text-white font-medium" onClick={handleSearch}>Search</Button>
       </div>
 
-      {error && <div className="bg-[red] w-full h-[50px] flex items-center rounded-[4px] px-[16px] mt-[100px]">
-        <p className="text-white font-mono ">{error}</p>
-      </div>}
+      {error && (
+        <div className="bg-[#ff00006b] w-full h-[50px] flex justify-between items-center rounded-[4px] px-[16px] mt-[100px]">
+          <p className="text-white font-mono">{error}</p>
+          <FaTimes className="text-white cursor-pointer" onClick={() => setError(null)} />
+        </div>
+      )}
 
-      {userData && !error && (
+      {loading && (
+        <div className="flex justify-center items-center mt-[200px]">
+          <PropagateLoader color="#0079FE" />
+        </div>
+      )}
+
+      {!loading && userData && !error && (
         <div className="mt-8 bg-[#1F2A48] rounded-[12px] w-full py-[20px] px-4 md:p-[40px]">
           <div>
             <div className="md:flex items-start gap-6">
