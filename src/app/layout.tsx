@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://",
+        url: "https://git--spy.vercel.app/_next/image?url=%2FLogo.jpg&w=640&q=75",
         width: 1200,
         height: 630,
         alt: "GitSpy Preview Image",
@@ -31,10 +31,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "GitSpy",
     description: "Discover GitHub profiles instantly using GitSpy.",
-    images: ["https://"],
+    images: ["https://git--spy.vercel.app/_next/image?url=%2FLogo.jpg&w=640&q=75"],
   },
   icons: {
-    icon: "http://localhost:3000/_next/image?url=%2FLogo.jpg&w=256&q=75",
+    icon: "https://git--spy.vercel.app/_next/image?url=%2FLogo.jpg&w=640&q=75",
   },
 };
 

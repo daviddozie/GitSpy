@@ -109,8 +109,6 @@ const Home = () => {
     }
   };
 
-
-
   return (
     <>
       {firstLoad ? (
