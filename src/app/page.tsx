@@ -116,7 +116,7 @@ const Home = () => {
           <Image
             src="/Logo.jpg"
             alt="Logo"
-            width={400}
+            width={300}
             height={0}
             className="rounded-full mx-auto object-cover"
           />

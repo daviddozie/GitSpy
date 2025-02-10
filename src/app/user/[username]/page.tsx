@@ -203,7 +203,7 @@ const UserProfile = () => {
             ))
           ) : (
             <div className="bg-[#ff00006b] w-full h-[50px] flex justify-between items-center rounded-[4px] px-[16px] mt-[100px]">
-              <p className="text-white font-mono">{error}</p>
+              <p className="text-white font-mono">No Repo Found</p>
               <FaTimes className="text-white cursor-pointer" onClick={() => setError(null)} />
             </div>
           )}
