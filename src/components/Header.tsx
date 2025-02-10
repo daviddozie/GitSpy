@@ -4,7 +4,7 @@ export const Header = () => {
 
     const nav = [
         { title: "Home", link: "/" },
-        { title: "About", link: "about" }
+        { title: "About", link: "/about" }
     ];
 
     return (

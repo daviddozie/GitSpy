@@ -1,24 +1,21 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaStar, FaCodeBranch, FaEye } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { FaStar, FaCodeBranch, FaEye, FaGithub, FaLinkedinIn, FaTimes  } from "react-icons/fa";
+import { FaXTwitter, FaLocationDot } from "react-icons/fa6";
 import { IoIosArrowBack } from "react-icons/io";
-import { FaLocationDot } from "react-icons/fa6";
 import { PropagateLoader } from "react-spinners";
-import { FaTimes } from "react-icons/fa";
-
 
 const UserProfile = () => {
   const { username } = useParams();
-  console.log("Username from URL:", username);
+  const router = useRouter();
   const [userData, setUserData] = useState<any>(null);
   const [repos, setRepos] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  console.log("Username from URL:", username);
 
   useEffect(() => {
     if (!username) {
@@ -94,10 +91,22 @@ const UserProfile = () => {
 
   if (error) return <p className="text-red-500 text-center">{error}</p>;
 
+  const handleBack = () => {
+    const lastUser = localStorage.getItem("lastUser");
+    if (lastUser) {
+      router.push(`/profile/${lastUser}`);
+    } else {
+      router.push("/");
+    }
+  };
+
+
   return (
     <div className="lg:w-[70%] md:w-[80%] w-[95%] mx-auto text-white">
       <div className="bg-[#1F2A48] rounded-[12px] w-full py-[20px] px-[10px] md:p-[40px] my-[20px]">
-        <Link href="/"><IoIosArrowBack size={30} /></Link>
+        <button onClick={handleBack}>
+          <IoIosArrowBack size={30} />
+        </button>
         <div className="md:flex items-start gap-6 pt-4">
           <Image
             src={userData.avatar_url}
