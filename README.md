@@ -1,6 +1,6 @@
 # GitSpy
 
-![📸 Screenshot](./public/screenshot.png)
+![📸 Screenshot](./public/screen.png)
 
 GitSpy is a powerful and user-friendly GitHub profile finder that allows users to search for any GitHub profile and explore its details instantly.
 
